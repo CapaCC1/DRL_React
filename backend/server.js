@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 
 // Configura la dirección IP del ESP32 (ajusta según tu red)
-const ESP32_IP = 'http://192.168.4.1'; // Cambia por la IP del ESP32 en tu red local
+const ESP32_IP = 'http://192.168.1.137'; // Cambia por la IP del ESP32 en tu red local
 
 // Middleware para servir archivos estáticos
 app.use(express.static('views'));
@@ -42,7 +42,7 @@ app.get('/modo_dinamico', async (req, res) => {
     console.log("Modo dinamico activado")
     res.send('Modo dinámico activado');
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     res.status(500).send('Error al activar el modo dinámico');
   }
 });
