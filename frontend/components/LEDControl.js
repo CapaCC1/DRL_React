@@ -64,7 +64,7 @@ export default function LEDControl() {
 
   // Usar un efecto para consultar el estado de los LEDs cada segundo
   useEffect(() => {
-    const interval = setInterval(fetchLEDStatus, 1000); // Cada 1000 ms = 1 segundo
+    const interval = setInterval(fetchLEDStatus, 50); // Cada 1000 ms = 1 segundo
     return () => clearInterval(interval); // Limpiar el intervalo al desmontar el componente
   }, []);
 
