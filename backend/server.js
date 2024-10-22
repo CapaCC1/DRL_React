@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 
 // Configura la dirección IP del ESP32 (ajusta según tu red)
-const ESP32_IP = 'http://192.168.1.137'; // Cambia por la IP del ESP32 en tu red local
+const ESP32_IP = 'http://192.168.1.144'; // Cambia por la IP del ESP32 en tu red local
 
 // Middleware para servir archivos estáticos
 app.use(express.static('views'));

@@ -20,7 +20,7 @@ export default function LEDControl() {
     const [r, g, b] = hexToRgb(selectedColor);
 
     try {
-      await axios.get('http://192.168.1.137/set_pixel', {
+      await axios.get('http://192.168.1.144/set_pixel', {
         params: { x, y, r, g, b },
       });
 
@@ -45,7 +45,7 @@ export default function LEDControl() {
   // Función para obtener el estado actual de los LEDs
   const fetchLEDStatus = async () => {
     try {
-      const response = await axios.get('http://192.168.1.137/led_status');
+      const response = await axios.get('http://192.168.1.144/led_status');
       const colors = response.data.map(led => `#${((1 << 24) + (led.r << 16) + (led.g << 8) + led.b).toString(16).slice(1)}`);
       const updatedColors = Array(numRows).fill().map(() => Array(numCols).fill('#8a8888'));
 
@@ -71,7 +71,7 @@ export default function LEDControl() {
   // Función para activar el modo dinámico
   const activateDynamicMode = async () => {
     try {
-      await axios.get('http://192.168.1.137/modo_dinamico');
+      await axios.get('http://192.168.1.144/modo_dinamico');
       setMessage('Modo dinámico activado');
       setIsMessageVisible(true);
 
