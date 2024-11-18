@@ -20,7 +20,7 @@ export default function LEDControl() {
     const [r, g, b] = hexToRgb(selectedColor);
 
     try {
-      await axios.get('http://192.168.1.144/set_pixel', {
+      await axios.get('http://192.168.1.143/set_pixel', {
         params: { x, y, r, g, b },
       });
 
@@ -45,7 +45,7 @@ export default function LEDControl() {
   // Función para obtener el estado actual de los LEDs
   const fetchLEDStatus = async () => {
     try {
-      const response = await axios.get('http://192.168.1.144/led_status');
+      const response = await axios.get('http://192.168.1.143/led_status');
       const colors = response.data.map(led => `#${((1 << 24) + (led.r << 16) + (led.g << 8) + led.b).toString(16).slice(1)}`);
       const updatedColors = Array(numRows).fill().map(() => Array(numCols).fill('#8a8888'));
 
@@ -71,15 +71,31 @@ export default function LEDControl() {
   // Función para activar el modo dinámico
   const activateDynamicMode = async () => {
     try {
-      await axios.get('http://192.168.1.144/modo_dinamico');
-      setMessage('Modo dinámico activado');
+      await axios.get('http://192.168.1.143/modo_show_1');
+      setMessage('Modo show activado');
       setIsMessageVisible(true);
 
       // Ocultar el mensaje después de 3 segundos
       setTimeout(() => setIsMessageVisible(false), 3000);
     } catch (error) {
-      console.error('Error al activar el modo dinámico', error);
-      setMessage('Error al activar el modo dinámico');
+      console.error('Error al activar el modo show', error);
+      setMessage('Error al activar el modo show');
+      setIsMessageVisible(true);
+    }
+  };
+
+  // Función para activar el modo dinámico
+  const deactivateDynamicMode = async () => {
+    try {
+      await axios.get('http://192.168.1.143/desactivar-modo-show-1');
+      setMessage('Modo show desactivado');
+      setIsMessageVisible(true);
+
+      // Ocultar el mensaje después de 3 segundos
+      setTimeout(() => setIsMessageVisible(false), 3000);
+    } catch (error) {
+      console.error('Error al desactivar el modo show', error);
+      setMessage('Error al desactivar el modo show');
       setIsMessageVisible(true);
     }
   };
@@ -97,6 +113,7 @@ export default function LEDControl() {
 
   return (
     <View style={styles.container}>
+
       <ColorPicker
         color={selectedColor}
         onColorChange={(color) => setSelectedColor(color)}
@@ -105,6 +122,16 @@ export default function LEDControl() {
         noSnap={true}
         row={false}
       />
+     <TouchableOpacity 
+      style={[styles.button]} 
+      onPress={activateDynamicMode}>
+      <Text style={styles.buttonText}>Activar Modo Show 1</Text>
+    </TouchableOpacity>
+    <TouchableOpacity 
+      style={[styles.button]} 
+      onPress={deactivateDynamicMode}>
+      <Text style={styles.buttonText}>Desactivar Modo Show 1</Text>
+    </TouchableOpacity>
       <View style={styles.grid}>
         {Array.from({ length: numRows }).map((_, rowIndex) => (
           <View key={rowIndex} style={styles.row}>
@@ -118,7 +145,6 @@ export default function LEDControl() {
           </View>
         ))}
       </View>
-      <Button title="Activar Modo Dinámico" onPress={activateDynamicMode} />
       {isMessageVisible && <Text style={styles.message}>{message}</Text>}
     </View>
   );
@@ -161,5 +187,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1,
   },
+  button: {
+    marginTop: 20, // Espacio adicional hacia arriba
+    paddingVertical: 10, // Relleno vertical
+    paddingHorizontal: 20, // Relleno horizontal
+    backgroundColor: '#007BFF', // Color de fondo
+    borderRadius: 5, // Bordes redondeados
+    alignItems: 'center', // Centrar el texto dentro del botón
+  },
+  buttonText: {
+    color: '#FFFFFF', // Color del texto
+    fontSize: 14, // Tamaño de la fuente
+    fontWeight: 'bold', // Grosor del texto
+  },
 });
-//e

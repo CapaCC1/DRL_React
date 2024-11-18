@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 
 // Configura la dirección IP del ESP32 (ajusta según tu red)
-const ESP32_IP = 'http://192.168.1.144'; // Cambia por la IP del ESP32 en tu red local
+const ESP32_IP = 'http://192.168.1.143'; // Cambia por la IP del ESP32 en tu red local
 
 // Middleware para servir archivos estáticos
 app.use(express.static('views'));
@@ -35,15 +35,41 @@ app.get('/', (req, res) => {
 
 
 // Ruta para activar el modo dinámico
-app.get('/modo_dinamico', async (req, res) => {
+app.get('/modo_show_1', async (req, res) => {
   try {
     // Hacer una petición al ESP32 para activar el modo dinámico
-    await axios.get(`${ESP32_IP}/modo_dinamico`);
-    console.log("Modo dinamico activado")
-    res.send('Modo dinámico activado');
+    await axios.get(`${ESP32_IP}/modo_show_1`);
+    console.log("Modo show activado")
+    res.send('Modo show activado');
   } catch (error) {
     console.log(error.message);
-    res.status(500).send('Error al activar el modo dinámico');
+    res.status(500).send('Error al activar el modo show');
+  }
+});
+
+// Ruta para desactivar el modo dinámico
+app.get('/desactivar-modo-show_1', async (req, res) => {
+  try {
+    // Hacer una petición al ESP32 para desactivar el modo dinámico
+    await axios.get(`${ESP32_IP}/desactivar-modo-show-1`);
+    console.log("Modo show desactivado");
+    res.send('Modo show desactivado');
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error al desactivar el modo show');
+  }
+});
+
+// Ruta para activar el modo dinámico
+app.get('/modo_show_2', async (req, res) => {
+  try {
+    // Hacer una petición al ESP32 para activar el modo dinámico
+    await axios.get(`${ESP32_IP}/modo_show_2`);
+    console.log("Modo show 2 activado")
+    res.send('Modo show 2 activado');
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Error al activar el modo show');
   }
 });
 

@@ -2,7 +2,7 @@
 #include <WiFi.h>
 #include <ESPAsyncWebServer.h>
 
-#define NUM_LEDS 64
+#define NUM_LEDS 9
 #define DATA_PIN 5
 #define PULSO_PIN 4  // Pin para detectar el pulso de corriente
 #define FILAS 8

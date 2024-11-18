@@ -24,7 +24,7 @@ const activarDinamicoBtn = document.getElementById('activarDinamico');
 
 
         activarDinamicoBtn.addEventListener('click', () => {
-            fetch('/modo_dinamico')
+            fetch('/modo_show_1')
                 .then(response => response.text())
                 .then(data => alert(data))
                 .catch(err => console.error(err));
